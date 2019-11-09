@@ -136,7 +136,7 @@
         for(let optionId in param.options){
           const option = param.options[optionId];
           const optionSelected = formData.hasOwnProperty(paramId) && formData[paramId].indexOf(optionId) > -1;          /* START IF: if option is selected and option is not default */
-          const images = document.querySelectorAll('.' + paramId + '-' + optionId)
+          const images = document.querySelectorAll('.' + paramId + '-' + optionId);
           if(optionSelected && !option.default){
             price += option.price;
           } else if(!optionSelected && option.default){
@@ -144,11 +144,11 @@
           }
           if(optionSelected){
             for(let img of images){
-              img.classList.add(classNames.menuProduct.imageVisible)
+              img.classList.add(classNames.menuProduct.imageVisible);
             }
           } else {
             for(let img of images){
-              img.classList.remove(classNames.menuProduct.imageVisible)
+              img.classList.remove(classNames.menuProduct.imageVisible);
             }
           }
         }
