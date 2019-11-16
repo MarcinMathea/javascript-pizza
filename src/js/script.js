@@ -1,4 +1,4 @@
-
+/* global Handlebars, utils, dataSource */ // eslint-disable-line no-unused-vars
 {
   'use strict';
 
@@ -172,6 +172,7 @@
       thisWidget.getElements(element);
       thisWidget.value = settings.amountWidget.defaultValue;
       thisWidget.setValue(thisWidget.input.value);
+      thisWidget.initActions();
     }
     getElements(element){
       const thisWidget = this;
@@ -182,23 +183,24 @@
       thisWidget.linkIncrease = thisWidget.element.querySelector(select.widgets.amount.linkIncrease);
     }
     setValue(value){
-    const  thisWidget = this;
+      const  thisWidget = this;
 
 
-    const newValue = parseInt(value);
+      const newValue = parseInt(value);
 
-    if(newValue != value && newValue >= settings.amountWidget.defaultMin newValue <= settings.amountWidget.defaultMax){
-      thisWidget.value = newValue;
-      thisWidget.announce();
-    }
-    thisWidget.input.value = thisWidget.value;
+      if(newValue != value && newValue >= settings.amountWidget.defaultMin && newValue <= settings.amountWidget.defaultMax)
+      {
+        thisWidget.value = newValue;
+        thisWidget.announce();
+      }
+      thisWidget.input.value = thisWidget.value;
     }
     initActions(){
       const thisWidget = this;
 
-      thisWidget.input.addEventListener('change', setValue(thisWidget.input.value));
-      thisWidget.linkDecrease.addEventListener('click', () => {event.preventDefault(), setValue(thisWidget.value -= 1)});
-      thisWidget.linkIncrease.addEventListener('click', () => {event.preventDefault(), setValue(thisWidget.value += 1)});
+      thisWidget.input.addEventListener('change', thisWidget.setValue(thisWidget.input.value));
+      thisWidget.linkDecrease.addEventListener('click', () => {event.preventDefault(), thisWidget.setValue(thisWidget.value -= 1);});
+      thisWidget.linkIncrease.addEventListener('click', () => {event.preventDefault(), thisWidget.setValue(thisWidget.value += 1);});
     }
     announce(){
       const thisWidget = this;
