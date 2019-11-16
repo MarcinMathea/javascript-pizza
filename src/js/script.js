@@ -234,8 +234,12 @@
       const thisWidget = this;
 
       thisWidget.input.addEventListener('change', thisWidget.setValue(thisWidget.input.value));
-      thisWidget.linkDecrease.addEventListener('click', () => {event.preventDefault(), setValue(thisWidget.value -= 1)});
-      thisWidget.linkIncrease.addEventListener('click', () => {event.preventDefault(), setValue(thisWidget.value += 1)});
+      thisWidget.linkDecrease.addEventListener('click', () => {
+        event.preventDefault(), thisWidget.setValue(thisWidget.value -= 1);
+      });
+      thisWidget.linkIncrease.addEventListener('click', () => {
+        event.preventDefault(), thisWidget.setValue(thisWidget.value += 1);
+      });
     }
     announce(){
       const thisWidget = this;
@@ -268,8 +272,13 @@
       const thisCart = this;
 
       thisCart.dom.toggleTrigger.addEventListener('click', () => {
-        thisCart.dom.wrapper.classList.toggle(classNames.cart.wrapperActive)
+        thisCart.dom.wrapper.classList.toggle(classNames.cart.wrapperActive);
       });
+    }
+    add(menuProduct){
+      //const thisCart = this;
+
+      console.log('adding product: ', menuProduct);
     }
   }
 
