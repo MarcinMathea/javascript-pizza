@@ -284,8 +284,9 @@
       thisCart.dom = {};
 
       thisCart.dom.wrapper = element;
-      thisCart.dom.toggleTrigger = thisCart.dom.wrapper.querySelector('.cart__summary');
-      //thisCart.dom.productList = thisCart.products.querySelector('.cart__order-summary');
+      thisCart.dom.toggleTrigger = thisCart.dom.wrapper.querySelector(select.cart.toggleTrigger);
+      thisCart.dom.productList = thisCart.dom.wrapper.querySelector(select.cart.productList);
+      console.log('A  ', thisCart.dom.productList)
     }
     initActions(){
       const thisCart = this;
@@ -300,7 +301,7 @@
       const generatedHTML = templates.cartProduct(thisCart);
       const generatedDOM = utils.createDOMFromHTML(generatedHTML);
 
-      thisCart.dom.productList.innerHTML = generatedDOM;
+      thisCart.dom.productList += generatedDOM;
       console.log('adding product: ', menuProduct);
     }
   }
