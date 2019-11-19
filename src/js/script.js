@@ -216,6 +216,7 @@
 
       thisProduct.name = thisProduct.data.name;
       thisProduct.amount = thisProduct.amountWidget.value;
+
       app.cart.add(thisProduct);
     }
   }
@@ -297,12 +298,12 @@
     add(menuProduct){
       const thisCart = this;
 
-      const generatedHTML = templates.cartProduct(thisCart);
+      const generatedHTML = templates.cartProduct(menuProduct);
       const generatedDOM = utils.createDOMFromHTML(generatedHTML);
 
-      thisCart.dom.productList += generatedDOM;
+      thisCart.dom.productList.appendChild(generatedDOM);
+      console.log('ADDING P  ', menuProduct);
       thisCart.products.push(new CartProduct(menuProduct, generatedDOM));
-      console.log('B   ', thisCart.products);
     }
   }
 
