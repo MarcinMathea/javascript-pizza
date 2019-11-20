@@ -31,7 +31,6 @@
         linkIncrease: 'a[href="#more"]',
       },
     },
-    // CODE ADDED START
     cart: {
       productList: '.cart__order-summary',
       toggleTrigger: '.cart__summary',
@@ -50,7 +49,6 @@
       edit: '[href="#edit"]',
       remove: '[href="#remove"]',
     },
-    // CODE ADDED END
   };
 
   const classNames = {
@@ -208,9 +206,9 @@
 
       thisProduct.amountWidget = new AmountWidget(thisProduct.amountWidgetElem);
       thisProduct.amountWidgetElem.addEventListener('updated', () => {
-            thisProduct.processOrder();
-          });
-        }
+        thisProduct.processOrder();
+      });
+    }
     addToCart(){
       const thisProduct = this;
 
@@ -230,6 +228,7 @@
       thisWidget.setValue(thisWidget.input.value);
       thisWidget.initActions();
     }
+
     getElements(element){
       const thisWidget = this;
 
@@ -242,7 +241,7 @@
       const  thisWidget = this;
 
       const newValue = parseInt(value);
-      if(newValue != thisWidget.value && newValue >= settings.amountWidget.defaultMin && newValue <= settings.amountWidget.defaultMax)
+      if(newValue != thisWidget.input.value && newValue >= settings.amountWidget.defaultMin && newValue <= settings.amountWidget.defaultMax)
       {
         thisWidget.value = newValue;
         thisWidget.input.value = thisWidget.value;
@@ -302,11 +301,10 @@
       const generatedDOM = utils.createDOMFromHTML(generatedHTML);
 
       thisCart.dom.productList.appendChild(generatedDOM);
-      console.log('ADDING P  ', menuProduct);
+
       thisCart.products.push(new CartProduct(menuProduct, generatedDOM));
     }
   }
-
   class CartProduct {
     constructor(menuProduct, element) {
       const thisCartProduct = this;
@@ -319,7 +317,9 @@
       thisCartProduct.params = JSON.parse(JSON.stringify(menuProduct.params));
 
       thisCartProduct.getElements(element);
-      console.log('C', thisCartProduct);
+      thisCartProduct.initAmountWidget();
+
+      console.log('CP  ', thisCartProduct);
     }
     getElements(element){
       const thisCartProduct = this;
@@ -338,10 +338,10 @@
       thisCartProduct.amountWidget = new AmountWidget(thisCartProduct.dom.amountWidget);
       thisCartProduct.amountWidget.addEventListener('updated', () => {
         thisCartProduct.amount = thisCartProduct.amountWidget.value;
-        thisCartProduct.price = thisCartProduct.priceSingle *= thisCartProduct.price;
-      });
+        thisCartProduct.price = thisCartProduct.priceSingle *= thisCartProduct.amount;
 
-      thisCartProduct.dom.price = thisCartProduct.price;
+        thisCartProduct.dom.price.innerHTML = thisCartProduct.price;
+      });
     }
   }
 
