@@ -355,13 +355,9 @@
         deliveryFee: thisCart.deliveryFee,
         products: [],
       };
-      const orederProd = {}
-      for (let prod in thisCart.products) {
-        for (let pr in thisCart.products[prod]) {
-          if (thisCart.products[prod].hasOwnProperty('id')) {
-            orederProd = pr;
-          }
-        }
+
+      for(let prod of thisCart.products){
+        payload.products.push(thisCart.products[prod].getData());
       }
 
       const options = {
@@ -440,7 +436,19 @@
         thisCartProduct.remove();
       });
     }
-  }
+    getData(){
+     const thisCartProduct = this;
+     thisCartProduct.data = {};
+     thisCartProduct.data.id = thisCartProduct.id;
+     thisCartProduct.data.amount = thisCartProduct.amount;
+     thisCartProduct.data.price = thisCartProduct.price;
+     thisCartProduct.data.priceSingle = thisCartProduct.singlePrice;
+     thisCartProduct.data.params = thisCartProduct.params;
+     thisCartProduct.data.address = thisCartProduct.address;
+
+     return thisCartProduct.data;
+   }
+}
 
   const app = {
     initMenu: function(){
