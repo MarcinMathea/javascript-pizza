@@ -81,9 +81,7 @@
 
   const templates = {
     menuProduct: Handlebars.compile(document.querySelector(select.templateOf.menuProduct).innerHTML),
-    // CODE ADDED START
     cartProduct: Handlebars.compile(document.querySelector(select.templateOf.cartProduct).innerHTML),
-    // CODE ADDED END
   };
 
   class Product {
@@ -289,6 +287,9 @@
       thisCart.dom.wrapper = element;
       thisCart.dom.toggleTrigger = thisCart.dom.wrapper.querySelector(select.cart.toggleTrigger);
       thisCart.dom.productList = thisCart.dom.wrapper.querySelector(select.cart.productList);
+      thisCart.dom.form = thisCart.dom.wrapper.querySelector(select.cart.form);
+      thisCart.dom.phone = thisCart.dom.wrapper.querySelector(select.cart.phone);
+      thisCart.dom.adress = thisCart.dom.wrapper.querySelector(select.cart.adress);
     }
     update(){
       const thisCart = this;
@@ -335,6 +336,47 @@
       thisCart.dom.productList.addEventListener('remove', () => {
         thisCart.remove(event.detail.cartProduct);
       });
+      thisCart.dom.form.addEventListener('submit',() => {
+        event.preventDefault();
+        thisCart.sendOrder();
+      });
+    }
+    sendOrder(){
+      const thisCart = this;
+
+      const url = settings.db.url + '/' + settings.db.order;
+
+      const payload = {
+        address: thisCart.adress,
+        phone: thisCart.phone,
+        totalNumber: thisCart.totalNumber,
+        subtotalPrice: thisCart.subtotalPrice,
+        totalPrice: thisCart.totalPrice,
+        deliveryFee: thisCart.deliveryFee,
+        products: [],
+      };
+      const orederProd = {}
+      for (let prod in thisCart.products) {
+        for (let pr in thisCart.products[prod]) {
+          if (thisCart.products[prod].hasOwnProperty('id')) {
+            orederProd = pr;
+          }
+        }
+      }
+
+      const options = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      };
+      fetch(url, options)
+        .then(function(response){
+          return response.json();
+        }).then(function(parsedResponse){
+          console.log('parsedResponse', parsedResponse);
+        });
     }
   }
 
@@ -418,14 +460,16 @@
         .then(function(rawResponse){
           return rawResponse.json();
         })
+
         .then(function(parsedResponse){
           console.log('parsedResponse ', parsedResponse);
 
-          parsedResponse = thisApp.data.products;
+          thisApp.data.products =  parsedResponse;
 
           thisApp.initMenu();
-        })
-        console.log('thisApp.data  ', JSON.stringify(thisApp.data));
+        });
+
+      console.log('thisApp.data  ', JSON.stringify(thisApp.data));
     },
     initCart: function(){
       const thisApp = this;
