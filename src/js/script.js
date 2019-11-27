@@ -356,9 +356,9 @@
         products: [],
       };
 
-      for(let prod of thisCart.products){
-        payload.products.push(thisCart.products[prod].getData());
-      }
+      for(let prod in thisCart.products){
+            payload.products.push(thisCart.products[prod].getData());
+        }
 
       const options = {
         method: 'POST',
