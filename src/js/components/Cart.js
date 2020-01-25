@@ -1,7 +1,7 @@
 /* eslint-disable linebreak-style */
-import CartProduct from './CartProduct';
-import utils from './utils.js';
-import {select, classNames, settings, templates} from './setting.js';
+import CartProduct from './CartProduct.js';
+import utils from '../utils.js';
+import { select, classNames, settings, templates } from '../settings.js';
 
 class Cart {
   constructor(element) {
@@ -13,7 +13,7 @@ class Cart {
     thisCart.getElements(element);
     thisCart.initActions();
   }
-  getElements(element){
+  getElements(element) {
     const thisCart = this;
 
     thisCart.dom = {};
@@ -25,19 +25,19 @@ class Cart {
     thisCart.dom.phone = thisCart.dom.wrapper.querySelector(select.cart.phone);
     thisCart.dom.adress = thisCart.dom.wrapper.querySelector(select.cart.adress);
   }
-  update(){
+  update() {
     const thisCart = this;
 
     thisCart.totalNumber = 0;
     thisCart.subtotalPrice = 0;
 
-    for(let prod of thisCart.products){
+    for (let prod of thisCart.products) {
       thisCart.subtotalPrice += prod.price;
       thisCart.totalNumber += prod.amount;
     }
     thisCart.totalPrice = thisCart.subtotalPrice += thisCart.deliveryFee;
   }
-  add(menuProduct){
+  add(menuProduct) {
     const thisCart = this;
 
     const generatedHTML = templates.cartProduct(menuProduct);
@@ -49,7 +49,7 @@ class Cart {
 
     thisCart.update();
   }
-  remove(cartProduct){
+  remove(cartProduct) {
     const thisCart = this;
 
     const index = thisCart.products.indexOf(cartProduct);
@@ -58,7 +58,7 @@ class Cart {
     cartProduct.dom.wrapper.remove();
     thisCart.update();
   }
-  initActions(){
+  initActions() {
     const thisCart = this;
 
     thisCart.dom.toggleTrigger.addEventListener('click', () => {
@@ -70,12 +70,12 @@ class Cart {
     thisCart.dom.productList.addEventListener('remove', () => {
       thisCart.remove(event.detail.cartProduct);
     });
-    thisCart.dom.form.addEventListener('submit',() => {
+    thisCart.dom.form.addEventListener('submit', () => {
       event.preventDefault();
       thisCart.sendOrder();
     });
   }
-  sendOrder(){
+  sendOrder() {
     const thisCart = this;
 
     const url = settings.db.url + '/' + settings.db.order;
@@ -90,7 +90,7 @@ class Cart {
       products: [],
     };
 
-    for(let prod in thisCart.products){
+    for (let prod in thisCart.products) {
       payload.products.push(thisCart.products[prod].getData());
     }
 
@@ -102,9 +102,9 @@ class Cart {
       body: JSON.stringify(payload),
     };
     fetch(url, options)
-      .then(function(response){
+      .then(function (response) {
         return response.json();
-      }).then(function(parsedResponse){
+      }).then(function (parsedResponse) {
         console.log('parsedResponse', parsedResponse);
       });
   }

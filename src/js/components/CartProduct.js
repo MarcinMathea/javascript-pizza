@@ -1,6 +1,6 @@
 /* eslint-disable linebreak-style */
-import AmountWidget from './components/AmountWidget';
-import {select} from './setting';
+import AmountWidget from './AmountWidget.js';
+import { select } from '../settings.js';
 
 class CartProduct {
   constructor(menuProduct, element) {
@@ -17,7 +17,7 @@ class CartProduct {
     thisCartProduct.initAmountWidget();
     thisCartProduct.initActions();
   }
-  getElements(element){
+  getElements(element) {
     const thisCartProduct = this;
 
     thisCartProduct.dom = {};
@@ -28,7 +28,7 @@ class CartProduct {
     thisCartProduct.dom.remove = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.remove);
     thisCartProduct.dom.edit = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.edit);
   }
-  initAmountWidget(){
+  initAmountWidget() {
     const thisCartProduct = this;
 
     thisCartProduct.amountWidget = new AmountWidget(thisCartProduct.dom.amountWidget);
@@ -39,11 +39,11 @@ class CartProduct {
       thisCartProduct.dom.price.innerHTML = thisCartProduct.price;
     });
   }
-  remove(){
+  remove() {
     const thisCartProduct = this;
 
     const event = new CustomEvent('remove', {
-      bubbles : true,
+      bubbles: true,
       detail: {
         cartProduct: thisCartProduct,
       },
@@ -51,8 +51,8 @@ class CartProduct {
 
     thisCartProduct.dom.wrapper.dispatchEvent(event);
   }
-  initActions(){
-    const thisCartProduct =  this;
+  initActions() {
+    const thisCartProduct = this;
 
     //thisCartProduct.dom.edit.addEventListener('click', () => {
     //event.preventDefault();
@@ -62,7 +62,7 @@ class CartProduct {
       thisCartProduct.remove();
     });
   }
-  getData(){
+  getData() {
     const thisCartProduct = this;
     thisCartProduct.data = {};
     thisCartProduct.data.id = thisCartProduct.id;
