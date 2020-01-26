@@ -1,6 +1,6 @@
 /* eslint-disable linebreak-style */
 import CartProduct from './CartProduct.js';
-import utils from '../utils.js';
+import {utils} from '../utils.js';
 import { select, classNames, settings, templates } from '../settings.js';
 
 class Cart {

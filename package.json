@@ -13,7 +13,7 @@
         "test:html": "globstar nu-html-checker dist/*.html",
         "test:js": "eslint src/js/",
         "test:scss": "stylelint src/sass/",
-        "build": "npm-run-all build:* ",
+        "build": "npm-run-all build:* test",
         "build:clean": "mkdirp dist && rm -r dist && mkdirp dist",
         "build:copy": "copyfiles -a -u 1 -e \"**/sass/**/*\" -e \"**/.gitkeep\" \"src/**/*\" dist",
         "build:sass": "node-sass --output-style compact -o dist/css src/sass",
@@ -30,7 +30,7 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "json-server": "^0.15.1"
+      "json-server": "^0.14.2"
     },
     "devDependencies": {
         "autoprefixer-cli": "^1.0.0",
@@ -38,13 +38,11 @@
         "copyfiles": "^2.1.0",
         "eslint": "^5.14.1",
         "globstar": "^1.0.0",
-        "jason-server": "^3.0.0",
         "mkdirp": "^0.5.1",
         "node-sass": "^4.11.0",
         "npm-run-all": "^4.1.5",
         "nu-html-checker": "^0.1.0",
         "onchange": "^5.2.0",
-        "prettier": "^1.19.1",
         "stylelint": "^9.10.1",
         "stylelint-scss": "^3.5.4"
     }

@@ -1,6 +1,6 @@
 /* eslint-disable linebreak-style */
 import AmountWidget from './AmountWidget.js';
-import utils from '../utils.js';
+import {utils} from '../utils.js';
 import { classNames, select, templates } from '../settings.js';
 
 class Product {
