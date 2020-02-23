@@ -1,9 +1,8 @@
 import { utils } from '../utils.js';
 import { select, settings } from '../settings.js';
-import { rangeSlider } from '../../vendor/range-slider.min.js';
 import BaseWidget from './BaseWidget.js';
 
-class HourPicker extends BaseWidget {
+class HoursPicker extends BaseWidget {
   constructor(wrapper) {
     super(wrapper, settings.hours.open);
     const thisWidget = this;
@@ -11,28 +10,26 @@ class HourPicker extends BaseWidget {
     thisWidget.dom.input = thisWidget.dom.wrapper.querySelector(select.widgets.hourPicker.input);
     thisWidget.dom.output = thisWidget.dom.wrapper.querySelector(select.widgets.hourPicker.output);
     thisWidget.initPlugin();
+    thisWidget.value = thisWidget.dom.input.value;
   }
   initPlugin() {
     const thisWidget = this;
 
-    const rangeSliderValue = rangeSlider.create(thisWidget.dom.input);
-
-    thisWidget.dom.input.addEventListener('input',() =>
-      thisWidget.value = rangeSliderValue
-    );
+    rangeSlider.create(thisWidget.dom.input); // eslint-disable-line 
+    thisWidget.dom.input.addEventListener('input', () => {
+      thisWidget.value = thisWidget.dom.input.value;
+    });
   }
   parseValue(value) {
-    const hours = utils.numberToHour(value);
-    return hours;
+    return utils.numberToHour(value);
   }
   isValid() {
     return true;
   }
   renderValue() {
     const thisWidget = this;
-
-    thisWidget.dom.output = thisWidget;
+    thisWidget.dom.output.innerHTML = thisWidget.value;
   }
 }
 
-export default HourPicker;
+export default HoursPicker;
